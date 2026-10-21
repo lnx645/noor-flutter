@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'data/quran_api.dart';
+import 'presentation/pages/daftar_surah_page.dart';
+
 /// Noor — Al-Qur'an & Ibadah (versi Flutter, native).
 ///
 /// Fase 0: kerangka aplikasi — tema merek, navigasi bawah, dan halaman
@@ -18,7 +21,10 @@ class WarnaNoor {
 }
 
 class NoorApp extends StatelessWidget {
-  const NoorApp({super.key});
+  const NoorApp({super.key, this.api});
+
+  /// Klien API (dapat disuntikkan pada pengujian).
+  final QuranApi? api;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +55,7 @@ class NoorApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
       ),
-      home: const KerangkaUtama(),
+      home: KerangkaUtama(api: api ?? QuranApi()),
     );
   }
 }
@@ -73,7 +79,9 @@ const daftarBagian = <Bagian>[
 ];
 
 class KerangkaUtama extends StatefulWidget {
-  const KerangkaUtama({super.key});
+  const KerangkaUtama({super.key, required this.api});
+
+  final QuranApi api;
 
   @override
   State<KerangkaUtama> createState() => _KerangkaUtamaState();
@@ -89,7 +97,9 @@ class _KerangkaUtamaState extends State<KerangkaUtama> {
       appBar: AppBar(
         title: const Text('Noor — Al-Qur\'an & Ibadah'),
       ),
-      body: Center(
+      body: _aktif == 1
+          ? HalamanDaftarSurah(api: widget.api)
+          : Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
