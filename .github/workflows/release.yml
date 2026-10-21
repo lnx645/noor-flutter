@@ -90,3 +90,5 @@ jobs:
           - **noor.aab** — untuk Google Play Console.
 
           Bertanda tangan kunci rilis yang sama dengan versi sebelumnya (com.noor.app)."
+
+# Pemicu registrasi workflow (GitHub membaca ulang berkas ini).
